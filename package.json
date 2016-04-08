@@ -1,0 +1,14 @@
+{
+  "name": "mern-demo",
+  "version": "1.0.0",
+  "description": "Mern demo app",
+  "main": "webapp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adrian E.",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
