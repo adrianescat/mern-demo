@@ -8,6 +8,11 @@ var BugFilter = React.createClass({
 
 var BugTable = React.createClass({
   render: function() {
+    var bugs = this.props.bugs.map(function(bug) {
+      return (
+        <BugRow key= {bug.id} bug= {bug}/>
+      );
+    });
     return (
       <table>
         <thead>
@@ -20,8 +25,7 @@ var BugTable = React.createClass({
           </tr>
         </thead>
         <tbody>
-          <BugRow id={1} status="closed" priority="urgent" owner="Federico" title="Unknow first() method for NIL class"/>
-          <BugRow id={2} status="open" priority="urgent" owner="Federico" title="Can't assing attributes"/>
+          {bugs}
         </tbody>
       </table>
     );
@@ -32,11 +36,11 @@ var BugRow = React.createClass({
   render: function() {
     return (
     <tr>
-      <td>{this.props.id}</td>
-      <td>{this.props.status}</td>
-      <td>{this.props.priority}</td>
-      <td>{this.props.owner}</td>
-      <td>{this.props.title}</td>
+      <td>{this.props.bug.id}</td>
+      <td>{this.props.bug.status}</td>
+      <td>{this.props.bug.priority}</td>
+      <td>{this.props.bug.owner}</td>
+      <td>{this.props.bug.title}</td>
     </tr>
     );
   }
@@ -52,12 +56,16 @@ var BugAdd = React.createClass({
 
 var BugList = React.createClass({
   render: function() {
+    var bugs = [
+      {id: 1, status: "closed", priority: "urgent", owner: "Federico", title: "Unknow first() method for NIL class"},
+      {id: 2, status: "open", priority: "urgent", owner: "Federico", title: "Can't assing attributes"}
+    ];
     return (
       <div>
         <h1>Bug Tracker</h1>
         <BugFilter />
         <hr />
-        <BugTable />
+        <BugTable bugs={bugs}/>
         <hr />
         <BugAdd />
       </div>
