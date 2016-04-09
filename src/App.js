@@ -54,13 +54,23 @@ var BugAdd = React.createClass({
   }
 });
 
+var bugs = [
+  {id: 1, status: "closed", priority: "urgent", owner: "Federico", title: "Unknow first() method for NIL class"},
+  {id: 2, status: "open", priority: "urgent", owner: "Federico", title: "Can't assing attributes"}
+];
+
+var bugsCount = 2;
+
 var BugList = React.createClass({
   getInitialState: function() {
-    var bugs = [
-      {id: 1, status: "closed", priority: "urgent", owner: "Federico", title: "Unknow first() method for NIL class"},
-      {id: 2, status: "open", priority: "urgent", owner: "Federico", title: "Can't assing attributes"}
-    ];
     return {data: bugs}
+  },
+  _addBug: function() {
+    bugsCount += 1;
+    var new_bug = {id: bugsCount, status: "closed", priority: "urgent", owner: "Federico", title: "text from bug id: " + bugsCount};
+    var bugs = this.state.data.slice();
+    bugs.push(new_bug);
+    this.setState({data: bugs});
   },
   render: function() {
     return (
@@ -71,6 +81,7 @@ var BugList = React.createClass({
         <BugTable bugs={this.state.data}/>
         <hr />
         <BugAdd />
+        <button onClick={this._addBug}>Test</button>
       </div>
     );
   }
