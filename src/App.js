@@ -55,17 +55,20 @@ var BugAdd = React.createClass({
 });
 
 var BugList = React.createClass({
-  render: function() {
+  getInitialState: function() {
     var bugs = [
       {id: 1, status: "closed", priority: "urgent", owner: "Federico", title: "Unknow first() method for NIL class"},
       {id: 2, status: "open", priority: "urgent", owner: "Federico", title: "Can't assing attributes"}
     ];
+    return {data: bugs}
+  },
+  render: function() {
     return (
       <div>
         <h1>Bug Tracker</h1>
         <BugFilter />
         <hr />
-        <BugTable bugs={bugs}/>
+        <BugTable bugs={this.state.data}/>
         <hr />
         <BugAdd />
       </div>
