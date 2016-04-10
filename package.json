@@ -5,21 +5,23 @@
   "main": "webapp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel --presets react src --watch --out-dir static",
-    "mongobugs": "mongo scripts/init.mongo.js",
-    "browserify": "browserify static/App.js > static/bundle.js"
+    "mongobugs": "mongo scripts/init.mongo.js"
   },
   "author": "Adrian E.",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.7.5",
     "babel-preset-react": "^6.5.0",
+    "babelify": "^7.2.0",
     "body-parser": "^1.15.0",
+    "browserify": "^13.0.0",
     "express": "^4.13.4",
+    "gulp": "^3.9.1",
     "jquery": "^2.2.3",
     "mongodb": "^2.1.16",
     "nodemon": "^1.9.1",
     "react": "^15.0.1",
-    "react-dom": "^15.0.1"
+    "react-dom": "^15.0.1",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
