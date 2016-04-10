@@ -17,9 +17,12 @@ app.use(bodyParser.json());
 app.post('/api/bugs/', function(req, res) {
   console.log("Req body:", req.body);
   var newBug = req.body;
-  newBug.id = bugData.length + 1;
-  bugData.push(newBug);
-  res.json(newBug);
+	db.collection("bugs").insertOne(newBug, function(err, result) {
+    var newId = result.insertedId;
+    db.collection("bugs").find({_id: newId}).next(function(err, doc) {
+      res.json(doc);
+    });
+  });
 });
 
 MongoClient.connect('mongodb://localhost/bugsdb', function(err, dbConnection) {
