@@ -93,15 +93,25 @@ var BugList = React.createClass({
   },
   componentDidMount: function() {
     $.ajax('/api/bugs').done(function(data) {
-      this.setState({bugs: JSON.parse(data)});
+      this.setState({bugs: data});
     }.bind(this));
     // In production, we'd also handle errors.
   },
   _addBug: function(bug) {
-    var bugs = this.state.bugs.slice();
-    bug.id = this.state.bugs.length + 1;
-    bugs.push(bug);
-    this.setState({data: bugs});
+    $.ajax({
+      type: 'POST', url: '/api/bugs', contentType: 'application/json',
+      data: JSON.stringify(bug),
+      success: function(data) {
+        var bug = data;
+        // We're advised not to modify the state, it's immutable. So, make a copy.
+        var bugsModified = this.state.bugs.concat(bug);
+        this.setState({bugs: bugsModified});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // ideally, show error to user.
+        console.log("Error adding bug:", err);
+      }
+    });
   },
   render: function() {
     return (
