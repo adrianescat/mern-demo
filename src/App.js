@@ -47,29 +47,54 @@ var BugRow = React.createClass({
 });
 
 var BugAdd = React.createClass({
+  _handleSubmit: function(event) {
+    event.preventDefault();
+    var bug = {status: this.refs.bugStatus.value, priority: this.refs.bugPriority.value, owner: this.refs.bugOwner.value, title: this.refs.bugTitle.value}
+    //pass 'bug' back to the BugList
+    this.props.addBug(bug);
+    this.refs.bugForm.reset();
+  },
   render: function() {
     return (
-    <div>a form to add a new bug</div>
+      <form className="bugForm" ref="bugForm" onSubmit={this._handleSubmit}>
+        <input
+          ref="bugStatus"
+          type="text"
+          placeholder="Bug status"
+          required
+        />
+        <input
+          ref="bugPriority"
+          type="text"
+          placeholder="Bug priority"
+          required
+        />
+        <input
+          ref="bugOwner"
+          type="text"
+          placeholder="Bug owner"
+          required
+        />
+        <input
+          ref="bugTitle"
+          type="text"
+          placeholder="Bug title"
+          required
+        />
+      <input type="submit" value="Add bug" />
+      </form>
     );
   }
 });
 
-var bugs = [
-  {id: 1, status: "closed", priority: "urgent", owner: "Federico", title: "Unknow first() method for NIL class"},
-  {id: 2, status: "open", priority: "urgent", owner: "Federico", title: "Can't assing attributes"}
-];
-
-var bugsCount = 2;
-
 var BugList = React.createClass({
   getInitialState: function() {
-    return {data: bugs}
+    return {data: []}
   },
-  _addBug: function() {
-    bugsCount += 1;
-    var new_bug = {id: bugsCount, status: "closed", priority: "urgent", owner: "Federico", title: "text from bug id: " + bugsCount};
+  _addBug: function(bug) {
     var bugs = this.state.data.slice();
-    bugs.push(new_bug);
+    bug.id = this.state.data.length + 1;
+    bugs.push(bug);
     this.setState({data: bugs});
   },
   render: function() {
@@ -80,8 +105,7 @@ var BugList = React.createClass({
         <hr />
         <BugTable bugs={this.state.data}/>
         <hr />
-        <BugAdd />
-        <button onClick={this._addBug}>Test</button>
+        <BugAdd addBug={this._addBug}/>
       </div>
     );
   }
