@@ -89,11 +89,17 @@ var BugAdd = React.createClass({
 
 var BugList = React.createClass({
   getInitialState: function() {
-    return {data: []}
+    return {bugs: []}
+  },
+  componentDidMount: function() {
+    $.ajax('/api/bugs').done(function(data) {
+      this.setState({bugs: JSON.parse(data)});
+    }.bind(this));
+    // In production, we'd also handle errors.
   },
   _addBug: function(bug) {
-    var bugs = this.state.data.slice();
-    bug.id = this.state.data.length + 1;
+    var bugs = this.state.bugs.slice();
+    bug.id = this.state.bugs.length + 1;
     bugs.push(bug);
     this.setState({data: bugs});
   },
@@ -103,7 +109,7 @@ var BugList = React.createClass({
         <h1>Bug Tracker</h1>
         <BugFilter />
         <hr />
-        <BugTable bugs={this.state.data}/>
+        <BugTable bugs={this.state.bugs}/>
         <hr />
         <BugAdd addBug={this._addBug}/>
       </div>
