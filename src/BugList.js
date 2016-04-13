@@ -78,7 +78,7 @@ var BugList = React.createClass({
     return (
       <div>
         <h1>Bug Tracker</h1>
-        <BugFilter submitHandler={this._loadData}/>
+        <BugFilter submitHandler={this._loadData} initFilter={this.props.location.query}/>
         <hr />
         <BugTable bugs={this.state.bugs}/>
         <hr />
