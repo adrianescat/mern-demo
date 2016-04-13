@@ -6,6 +6,15 @@ var BugFilter = React.createClass({
     var initFilter = this.props.initFilter;
     return {status: initFilter.status, priority: initFilter.priority};
   },
+  componentWillReceiveProps: function(newProps) {
+    if (newProps.initFilter.status === this.state.status
+        && newProps.initFilter.priority === this.state.priority) {
+      console.log("BugFilter: componentWillReceiveProps, no change");
+      return;
+    }
+    console.log("BugFilter: componentWillReceiveProps, new filter:", newProps.initFilter);
+    this.setState({status: newProps.initFilter.status, priority: newProps.initFilter.priority});
+  },
   _submit: function(e) {
     var newFilter = {};
     if (this.state.priority) newFilter.priority = this.state.priority;
