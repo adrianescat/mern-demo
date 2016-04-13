@@ -51,10 +51,12 @@ var BugList = React.createClass({
     return {bugs: []}
   },
   componentDidMount: function() {
-    $.ajax('/api/bugs').done(function(data) {
+    this._loadData({});
+  },
+  _loadData: function(filter) {
+    $.ajax('/api/bugs', {data: filter}).done(function(data) {
       this.setState({bugs: data});
     }.bind(this));
-    // In production, we'd also handle errors.
   },
   _addBug: function(bug) {
     $.ajax({
@@ -76,7 +78,7 @@ var BugList = React.createClass({
     return (
       <div>
         <h1>Bug Tracker</h1>
-        <BugFilter />
+        <BugFilter submitHandler={this._loadData}/>
         <hr />
         <BugTable bugs={this.state.bugs}/>
         <hr />
