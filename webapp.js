@@ -1,6 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 
 var app = express();
 var db;
@@ -30,6 +31,12 @@ app.post('/api/bugs/', function(req, res) {
       res.json(doc);
     });
   });
+});
+
+app.get('/api/bugs/:id', function(req, res) {
+	db.collection("bugs").findOne({_id: ObjectId(req.params.id)}, function(err, bug) {
+		res.json(bug);
+	});
 });
 
 MongoClient.connect('mongodb://localhost/bugsdb', function(err, dbConnection) {
